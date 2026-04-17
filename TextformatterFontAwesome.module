@@ -1,0 +1,177 @@
+<?php namespace ProcessWire;
+
+class TextformatterFontAwesome extends Textformatter implements Module, ConfigurableModule {
+
+    /* ======================================================
+     * Module Info
+     * ====================================================== */
+
+    public static function getModuleInfo() {
+        return [
+            'title' => 'Font Awesome Icons Textformatter',
+            'summary' => 'Converts shortcuts like :fa-star: to Font Awesome icons',
+            'version' => '0.0.2',
+            'author' => 'Lex Sanchez',
+            'requires' => 'ProcessWire>=3.0.0',
+            'icon' => 'star',
+            'autoload' => false,
+            'singular' => false
+        ];
+    }
+
+
+    /* ======================================================
+     * Defaults
+     * ====================================================== */
+
+    protected static $defaultConfig = [
+        'icon_mappings' => ":fa-star: = fa-solid fa-star
+:fa-heart: = fa-solid fa-heart
+:fa-home: = fa-solid fa-house
+:fa-user: = fa-solid fa-user
+:fa-check: = fa-solid fa-check",
+
+        'outputFormat' => 'html',
+        'loadAssets' => 0,
+        'cdnVersion' => '6.5.1',
+        'customCss' => '',
+        'enableCache' => 1
+    ];
+
+
+    /* ======================================================
+     * Runtime
+     * ====================================================== */
+
+    protected $iconMappings = [];
+    protected static $assetsLoaded = false;
+
+
+    /* ======================================================
+     * INIT  (AQUÍ SÍ está cargada la config)
+     * ====================================================== */
+
+    public function init() {
+
+        // Parse textarea guardado
+        $this->parseIconMappings();
+    }
+
+
+    /* ======================================================
+     * TEXT FORMATTER
+     * ====================================================== */
+
+    public function format(&$str) {
+
+        if(!$this->iconMappings || strpos($str, ':fa-') === false) return;
+
+        if($this->loadAssets && !self::$assetsLoaded) {
+            $this->loadFontAwesomeAssets();
+            self::$assetsLoaded = true;
+        }
+
+        foreach($this->iconMappings as $shortcut => $classes) {
+            $str = str_replace($shortcut, $this->renderIcon($classes), $str);
+        }
+    }
+
+
+    /* ======================================================
+     * Parse textarea config → array
+     * ====================================================== */
+
+    protected function parseIconMappings() {
+
+        $this->iconMappings = [];
+
+        $raw = trim((string) $this->icon_mappings);
+
+        if(!$raw) return;
+
+        foreach(explode("\n", $raw) as $line) {
+
+            $line = trim($line);
+
+            if(!$line || strpos($line, '=') === false) continue;
+
+            [$shortcut, $classes] = array_map('trim', explode('=', $line, 2));
+
+            if($shortcut && $classes) {
+                $this->iconMappings[$shortcut] = $classes;
+            }
+        }
+    }
+
+
+    /* ======================================================
+     * Render icon
+     * ====================================================== */
+
+    protected function renderIcon($classes) {
+
+        return "<i class=\"$classes\"></i>";
+    }
+
+
+    /* ======================================================
+     * Assets loader
+     * ====================================================== */
+
+    protected function loadFontAwesomeAssets() {
+
+        $config = $this->wire('config');
+
+        $version = $this->cdnVersion ?: '6.5.1';
+
+        $config->styles->add(
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/$version/css/all.min.css"
+        );
+
+        if($this->customCss) {
+            $config->styles->add($this->customCss);
+        }
+    }
+
+
+    /* ======================================================
+     * Config UI
+     * ====================================================== */
+
+    public static function getModuleConfigInputfields(array $data) {
+
+        $data = array_merge(self::$defaultConfig, $data);
+
+        $fields = new InputfieldWrapper();
+
+
+        $f = wire('modules')->get('InputfieldTextarea');
+        $f->name = 'icon_mappings'; // 👈 MISMO NOMBRE
+        $f->label = 'Icon mappings';
+        $f->rows = 12;
+        $f->value = $data['icon_mappings'];
+        $fields->add($f);
+
+
+        $f = wire('modules')->get('InputfieldCheckbox');
+        $f->name = 'loadAssets';
+        $f->label = 'Auto load FontAwesome CDN';
+        $f->checked = $data['loadAssets'];
+        $fields->add($f);
+
+
+        return $fields;
+    }
+
+
+    /* ======================================================
+     * Install defaults
+     * ====================================================== */
+
+    public function ___install() {
+
+        foreach(self::$defaultConfig as $k => $v) {
+            $this->modules->saveConfig($this, [$k => $v]);
+        }
+    }
+}
