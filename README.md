@@ -164,7 +164,7 @@ $fa->set('loadAssets', false);
 ## Support
 
 To report bugs or request features, visit:
-[GitHub Issues](https://github.com/yourusername/TextformatterFontAwesome/issues)
+[GitHub Issues](https://github.com/lexsanchez/TextformatterFontAwesome/issues)
 
 ## License
 
