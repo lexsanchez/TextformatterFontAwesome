@@ -1,29 +1,29 @@
 # TextformatterFontAwesome
 
-Un módulo Textformatter para ProcessWire que convierte atajos de texto en iconos de Font Awesome.
+A Textformatter module for ProcessWire that converts text shortcuts into Font Awesome icons.
 
-## Características
+## Features
 
-- ✅ Convierte atajos como `:fa-star:` en iconos de Font Awesome
-- ✅ Configuración flexible de mapeos de iconos
-- ✅ Soporte para Font Awesome 6+ (solid, regular, brands)
-- ✅ Carga automática de assets desde CDN
-- ✅ Salida HTML o SVG
-- ✅ Cache para mejor rendimiento
-- ✅ Fácil configuración desde el admin de ProcessWire
+- ✅ Converts shortcuts like `:fa-star:` into Font Awesome icons
+- ✅ Flexible icon mapping configuration
+- ✅ Support for Font Awesome 6+ (solid, regular, brands)
+- ✅ Automatic asset loading from CDN
+- ✅ HTML or SVG output
+- ✅ Cache for improved performance
+- ✅ Easy configuration from the ProcessWire admin
 
-## Instalación
+## Installation
 
-1. Descarga o clona este módulo en `/site/modules/TextformatterFontAwesome/`
-2. Ve a **Módulos** > **Refresh** en el admin de ProcessWire
-3. Instala el módulo **TextformatterFontAwesome**
-4. Configura los mapeos de iconos según tus necesidades
+1. Download or clone this module into `/site/modules/TextformatterFontAwesome/`
+2. Go to **Modules** > **Refresh** in the ProcessWire admin
+3. Install the **TextformatterFontAwesome** module
+4. Configure icon mappings as needed
 
-## Configuración
+## Configuration
 
-### Mapeos de Iconos
+### Icon Mappings
 
-Define tus atajos de texto y las clases de Font Awesome correspondientes:
+Define your text shortcuts and their corresponding Font Awesome classes:
 
 ```
 :fa-star: = fa-solid fa-star
@@ -35,97 +35,97 @@ Define tus atajos de texto y las clases de Font Awesome correspondientes:
 :fa-twitter: = fa-brands fa-twitter
 ```
 
-### Opciones de Configuración
+### Configuration Options
 
-- **Formato de Salida**: HTML (CSS) o SVG
-- **Cargar Assets**: Incluir automáticamente Font Awesome desde CDN
-- **Versión CDN**: Versión de Font Awesome a cargar (por defecto 6.5.1)
-- **CSS Personalizado**: URL opcional para CSS personalizado
-- **Habilitar Cache**: Cache de mapeos para mejor rendimiento
+- **Output Format**: HTML (CSS) or SVG
+- **Load Assets**: Automatically include Font Awesome from CDN
+- **CDN Version**: Font Awesome version to load (default 6.5.1)
+- **Custom CSS**: Optional URL for custom CSS
+- **Enable Cache**: Cache mappings for improved performance
 
-## Uso
+## Usage
 
-### 1. Aplicar a Campos
+### 1. Apply to Fields
 
-Ve a **Configuración** > **Campos** > selecciona tu campo de texto y en la pestaña **Detalles**:
+Go to **Setup** > **Fields** > select your text field and in the **Details** tab:
 
-1. En **Textformatters aplicados**, selecciona **Font Awesome Icons**
-2. Guarda el campo
+1. Under **Applied Textformatters**, select **Font Awesome Icons**
+2. Save the field
 
-### 2. Usar en Plantillas
+### 2. Use in Templates
 
 ```php
-// El textformatter se aplica automáticamente al renderizar el campo
-echo $page->body; // Los atajos :fa-star: se convierten automáticamente
+// The textformatter is automatically applied when rendering the field
+echo $page->body; // Shortcuts like :fa-star: are converted automatically
 
-// O aplicar manualmente
+// Or apply manually
 $textformatter = $modules->get('TextformatterFontAwesome');
-$text = "Me gusta esta página :fa-heart: ¡Es genial! :fa-star:";
+$text = "I like this page :fa-heart: It's great! :fa-star:";
 $textformatter->format($text);
-echo $text; // Salida: Me gusta esta página <i class="fa-solid fa-heart"></i> ¡Es genial! <i class="fa-solid fa-star"></i>
+echo $text; // Output: I like this page <i class="fa-solid fa-heart"></i> It's great! <i class="fa-solid fa-star"></i>
 ```
 
-### 3. Ejemplos de Atajos
+### 3. Shortcut Examples
 
-| Atajo | Resultado | Descripción |
-|-------|-----------|-------------|
-| `:fa-star:` | `<i class="fa-solid fa-star"></i>` | Estrella sólida |
-| `:fa-heart:` | `<i class="fa-solid fa-heart"></i>` | Corazón sólido |
-| `:fa-home:` | `<i class="fa-solid fa-house"></i>` | Casa sólida |
-| `:fa-facebook:` | `<i class="fa-brands fa-facebook"></i>` | Logo Facebook |
-| `:fa-email:` | `<i class="fa-solid fa-envelope"></i>` | Sobre de correo |
+| Shortcut | Result | Description |
+|----------|--------|-------------|
+| `:fa-star:` | `<i class="fa-solid fa-star"></i>` | Solid star |
+| `:fa-heart:` | `<i class="fa-solid fa-heart"></i>` | Solid heart |
+| `:fa-home:` | `<i class="fa-solid fa-house"></i>` | Solid house |
+| `:fa-facebook:` | `<i class="fa-brands fa-facebook"></i>` | Facebook logo |
+| `:fa-email:` | `<i class="fa-solid fa-envelope"></i>` | Email envelope |
 
-## Ejemplos de Uso en Contenido
+## Content Usage Examples
 
-### En un Editor de Texto
+### In a Text Editor
 
 ```
-¡Bienvenido a nuestro sitio! :fa-star:
+Welcome to our site! :fa-star:
 
-Contáctanos:
-- Email: info@ejemplo.com :fa-email:
-- Teléfono: +1234567890 :fa-phone:
+Contact us:
+- Email: info@example.com :fa-email:
+- Phone: +1234567890 :fa-phone:
 
-Síguenos en redes sociales:
+Follow us on social media:
 - Facebook :fa-facebook:
 - Twitter :fa-twitter:
 - Instagram :fa-instagram:
 
-¡Gracias por visitarnos! :fa-heart:
+Thanks for visiting! :fa-heart:
 ```
 
-### Resultado HTML
+### HTML Output
 
 ```html
-¡Bienvenido a nuestro sitio! <i class="fa-solid fa-star"></i>
+Welcome to our site! <i class="fa-solid fa-star"></i>
 
-Contáctanos:
-- Email: info@ejemplo.com <i class="fa-solid fa-envelope"></i>
-- Teléfono: +1234567890 <i class="fa-solid fa-phone"></i>
+Contact us:
+- Email: info@example.com <i class="fa-solid fa-envelope"></i>
+- Phone: +1234567890 <i class="fa-solid fa-phone"></i>
 
-Síguenos en redes sociales:
+Follow us on social media:
 - Facebook <i class="fa-brands fa-facebook"></i>
 - Twitter <i class="fa-brands fa-twitter"></i>
 - Instagram <i class="fa-brands fa-instagram"></i>
 
-¡Gracias por visitarnos! <i class="fa-solid fa-heart"></i>
+Thanks for visiting! <i class="fa-solid fa-heart"></i>
 ```
 
-## Personalización Avanzada
+## Advanced Customization
 
-### Mapeos Personalizados
+### Custom Mappings
 
-Puedes crear tus propios atajos:
+You can create your own shortcuts:
 
 ```
-:mi-icono: = fa-solid fa-custom-icon
-:empresa: = fa-solid fa-building
-:producto: = fa-solid fa-box
+:my-icon: = fa-solid fa-custom-icon
+:company: = fa-solid fa-building
+:product: = fa-solid fa-box
 ```
 
-### CSS Personalizado
+### Custom CSS
 
-Si usas Font Awesome Pro o tienes iconos personalizados:
+If you use Font Awesome Pro or have custom icons:
 
 ```css
 .fa-custom-icon::before {
@@ -133,43 +133,43 @@ Si usas Font Awesome Pro o tienes iconos personalizados:
 }
 ```
 
-### Uso Programático
+### Programmatic Usage
 
 ```php
-// Obtener el módulo
+// Get the module
 $fa = $modules->get('TextformatterFontAwesome');
 
-// Formatear texto
-$content = "Texto con iconos :fa-star: y :fa-heart:";
+// Format text
+$content = "Text with icons :fa-star: and :fa-heart:";
 $fa->format($content);
 echo $content;
 
-// Configurar dinámicamente
+// Configure dynamically
 $fa->set('outputFormat', 'svg');
 $fa->set('loadAssets', false);
 ```
 
-## Rendimiento
+## Performance
 
-- El módulo incluye cache para los mapeos parseados
-- Los assets se cargan solo cuando es necesario
-- Detección inteligente de contenido con iconos
+- The module includes cache for parsed mappings
+- Assets are loaded only when needed
+- Smart detection of content with icons
 
-## Compatibilidad
+## Compatibility
 
 - ProcessWire 3.0+
 - Font Awesome 6.0+
 - PHP 7.4+
 
-## Soporte
+## Support
 
-Para reportar bugs o solicitar características, visita:
+To report bugs or request features, visit:
 [GitHub Issues](https://github.com/yourusername/TextformatterFontAwesome/issues)
 
-## Licencia
+## License
 
 Mozilla Public License v2.0
 
-## Créditos
+## Credits
 
-Basado en [TextformatterEmoji](https://github.com/ryancramerdesign/TextformatterEmoji) por Ryan Cramer.
+Based on [TextformatterEmoji](https://github.com/ryancramerdesign/TextformatterEmoji) by Ryan Cramer.
